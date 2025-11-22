@@ -1,0 +1,29 @@
+<svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+  <!-- 背景 -->
+  <rect width="32" height="32" fill="#667eea"/>
+  
+  <!-- 猫头轮廓 -->
+  <rect x="8" y="8" width="16" height="16" fill="#764ba2" stroke="#4a5568" stroke-width="2"/>
+  
+  <!-- 猫耳朵 -->
+  <rect x="8" y="6" width="4" height="4" fill="#764ba2" stroke="#4a5568" stroke-width="1"/>
+  <rect x="20" y="6" width="4" height="4" fill="#764ba2" stroke="#4a5568" stroke-width="1"/>
+  
+  <!-- 猫眼睛 -->
+  <rect x="12" y="12" width="2" height="2" fill="#ffffff"/>
+  <rect x="18" y="12" width="2" height="2" fill="#ffffff"/>
+  
+  <!-- 猫鼻子 -->
+  <rect x="15" y="15" width="2" height="2" fill="#ff6b6b"/>
+  
+  <!-- 猫嘴巴 -->
+  <rect x="14" y="18" width="4" height="1" fill="#ffffff"/>
+  
+  <!-- 猫粮颗粒 -->
+  <rect x="10" y="22" width="2" height="2" fill="#ffd700"/>
+  <rect x="14" y="22" width="2" height="2" fill="#ffd700"/>
+  <rect x="18" y="22" width="2" height="2" fill="#ffd700"/>
+  
+  <!-- 像素边框效果 -->
+  <rect x="0" y="0" width="32" height="32" fill="none" stroke="#4a5568" stroke-width="2"/>
+</svg>

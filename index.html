@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🐱 像素猫粮工厂 - ODM服务系统</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="apple-touch-icon" href="favicon.png">
+    
+    <!-- 外部样式表 -->
+    <link rel="stylesheet" href="styles/main.css">
+    
+    <!-- 字体加载检测脚本 -->
+     <script>
+         // 字体加载检测
+         document.fonts.ready.then(function() {
+             document.body.classList.add('font-loaded');
+             document.body.classList.remove('font-loading');
+         });
+         
+         // 备用方案：如果字体加载失败，使用系统字体
+         setTimeout(function() {
+             if (!document.body.classList.contains('font-loaded')) {
+                 document.body.classList.add('font-loaded');
+                 document.body.classList.remove('font-loading');
+                 console.log('使用备用字体方案');
+             }
+         }, 3000);
+     </script>
+    
+    <!-- 外部脚本库 -->
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+</head>
+<body>
+    <!-- 主容器 -->
+    <div class="container">
+        <!-- 页面头部 -->
+        <div class="header">
+            <h1>🐱 像素猫粮工厂</h1>
+            <div class="subtitle">ODM服务门面模式演示系统</div>
+        </div>
+
+        <!-- 主要内容区域 -->
+        <div class="content">
+            
+            <!-- 客户端侧 - 品牌商控制台 -->
+            <div class="client-side">
+                <h2 class="section-title">🎮 品牌商控制台</h2>
+                
+                <!-- 品牌定制区域 -->
+                <div class="brand-customization">
+                    <h3>🏷️ 品牌定制</h3>
+                    <div class="input-group">
+                        <label>品牌名称:</label>
+                        <input type="text" class="pixel-input" id="brandName" placeholder="输入品牌名称..." value="喵星人优选">
+                    </div>
+                    <div class="input-group">
+                        <label>品牌标识:</label>
+                        <div class="emoji-selector">
+                            <div class="emoji-option" data-emoji="🐱" onclick="UIController.selectEmoji(this)">🐱</div>
+                            <div class="emoji-option" data-emoji="🐶" onclick="UIController.selectEmoji(this)">🐶</div>
+                            <div class="emoji-option" data-emoji="🐰" onclick="UIController.selectEmoji(this)">🐰</div>
+                            <div class="emoji-option" data-emoji="🐻" onclick="UIController.selectEmoji(this)">🐻</div>
+                            <div class="emoji-option" data-emoji="🦊" onclick="UIController.selectEmoji(this)">🦊</div>
+                            <div class="emoji-option" data-emoji="🐼" onclick="UIController.selectEmoji(this)">🐼</div>
+                            <div class="emoji-option" data-emoji="🐯" onclick="UIController.selectEmoji(this)">🐯</div>
+                            <div class="emoji-option" data-emoji="🦁" onclick="UIController.selectEmoji(this)">🦁</div>
+                            <div class="emoji-option" data-emoji="🐮" onclick="UIController.selectEmoji(this)">🐮</div>
+                            <div class="emoji-option" data-emoji="🐷" onclick="UIController.selectEmoji(this)">🐷</div>
+                            <div class="emoji-option" data-emoji="🐹" onclick="UIController.selectEmoji(this)">🐹</div>
+                            <div class="emoji-option" data-emoji="🐨" onclick="UIController.selectEmoji(this)">🐨</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 生产流程配置 -->
+                <div class="process-controls">
+                    <h3>⚙️ 生产流程配置</h3>
+                    
+                    <!-- 配方复杂度滑块 -->
+                    <div class="slider-group">
+                        <label>📋 配方复杂度</label>
+                        <input type="range" class="pixel-slider" id="recipeSlider" min="1" max="100" value="75" oninput="SliderController.updateSlider('recipe')">
+                        <div class="slider-value" id="recipeValue">75%</div>
+                    </div>
+                    
+                    <!-- 生产质量滑块 -->
+                    <div class="slider-group">
+                        <label>🏭 生产质量</label>
+                        <input type="range" class="pixel-slider" id="productionSlider" min="1" max="100" value="80" oninput="SliderController.updateSlider('production')">
+                        <div class="slider-value" id="productionValue">80%</div>
+                    </div>
+                    
+                    <!-- 质检标准滑块 -->
+                    <div class="slider-group">
+                        <label>🔍 质检标准</label>
+                        <input type="range" class="pixel-slider" id="qualitySlider" min="1" max="100" value="90" oninput="SliderController.updateSlider('quality')">
+                        <div class="slider-value" id="qualityValue">90%</div>
+                    </div>
+                    
+                    <!-- 包装等级滑块 -->
+                    <div class="slider-group">
+                        <label>🎁 包装等级</label>
+                        <input type="range" class="pixel-slider" id="packagingSlider" min="1" max="100" value="70" oninput="SliderController.updateSlider('packaging')">
+                        <div class="slider-value" id="packagingValue">70%</div>
+                    </div>
+                    
+                    <!-- 物流速度滑块 -->
+                    <div class="slider-group">
+                        <label>🚚 物流速度</label>
+                        <input type="range" class="pixel-slider" id="logisticsSlider" min="1" max="100" value="85" oninput="SliderController.updateSlider('logistics')">
+                        <div class="slider-value" id="logisticsValue">85%</div>
+                    </div>
+                </div>
+
+                <!-- 服务类型选择 -->
+                <div class="service-cards">
+                    <div class="service-card active" onclick="UIController.selectService('premium', event)">
+                        <h3>🌟 豪华美毛系列</h3>
+                        <p>42%高蛋白 + 美毛配方</p>
+                    </div>
+                    <div class="service-card" onclick="UIController.selectService('basic', event)">
+                        <h3>💪 营养均衡系列</h3>
+                        <p>32%蛋白 + 日常营养</p>
+                    </div>
+                    <div class="service-card" onclick="UIController.selectService('medical', event)">
+                        <h3>🏥 处方护理系列</h3>
+                        <p>低蛋白 + 医疗配方</p>
+                    </div>
+                </div>
+
+                <!-- 控制按钮 -->
+                <div class="controls">
+                    <button class="btn" onclick="UIController.launchProduction()">🚀 开始生产</button>
+                    <button class="btn" onclick="UIController.resetSystem()">🔄 重置系统</button>
+                </div>
+            </div>
+
+            <!-- 服务端侧 - ODM生产流水线 -->
+            <div class="server-side">
+                <h2 class="section-title">🏭 ODM生产流水线</h2>
+                
+                <!-- 生产流程可视化 -->
+                <div class="process-flow">
+                    <!-- 连接线 -->
+                    <div class="step-connector connector-1" id="connector-1"></div>
+                    <div class="step-connector connector-2" id="connector-2"></div>
+                    <div class="step-connector connector-3" id="connector-3"></div>
+                    <div class="step-connector connector-4" id="connector-4"></div>
+                    <div class="step-connector connector-5" id="connector-5"></div>
+
+                    <!-- 处理步骤 -->
+                    <div class="process-step step-1 process-recipe" id="step-1">
+                        <div>📋</div>
+                        <div>配方设计</div>
+                        <div class="step-value" id="step1-value">75%</div>
+                    </div>
+                    <div class="process-step step-2 process-production" id="step-2">
+                        <div>🏭</div>
+                        <div>生产制造</div>
+                        <div class="step-value" id="step2-value">80%</div>
+                    </div>
+                    <div class="process-step step-3 process-quality" id="step-3">
+                        <div>🔍</div>
+                        <div>质量检测</div>
+                        <div class="step-value" id="step3-value">90%</div>
+                    </div>
+                    <div class="process-step step-4 process-packaging" id="step-4">
+                        <div>🎁</div>
+                        <div>包装设计</div>
+                        <div class="step-value" id="step4-value">70%</div>
+                    </div>
+                    <div class="process-step step-5 process-logistics" id="step-5">
+                        <div>🚚</div>
+                        <div>物流配送</div>
+                        <div class="step-value" id="step5-value">85%</div>
+                    </div>
+                </div>
+
+                <!-- 产品输出区域 -->
+                <div class="product-output" id="product-output">
+                    <div class="product-card" id="product-card">
+                        <!-- 产品头部 - 品牌信息 -->
+                        <div class="product-header">
+                            <div class="product-badge">🏆 定制产品</div>
+                            <div class="product-emoji" id="product-emoji">🐱</div>
+                            <div class="product-title-section">
+                                <h3 class="product-title" id="product-title">喵星人优选</h3>
+                                <div class="product-subtitle">像素猫粮工厂 ODM 出品</div>
+                            </div>
+                        </div>
+                        
+                        <!-- 产品核心信息 -->
+                        <div class="product-core">
+                            <div class="product-image-container">
+                                <div class="product-image" id="product-image">
+                                    🐱
+                                </div>
+                                <div class="product-quality-badge">
+                                    <span class="quality-star">⭐</span>
+                                    <span id="quality-rating">A+</span>
+                                </div>
+                            </div>
+                            
+                            <div class="product-details">
+                                <div class="detail-row">
+                                    <span class="detail-label">📅 生产批次:</span>
+                                    <span id="production-batch">P-2024-0015</span>
+                                </div>
+                                <div class="detail-row">
+                                    <span class="detail-label">⏰ 保质期限:</span>
+                                    <span id="expiry-date">18个月</span>
+                                </div>
+                                <div class="detail-row">
+                                    <span class="detail-label">📦 物流单号:</span>
+                                    <span id="tracking-number" class="tracking-code">TRK-20240115-001</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 产品规格网格 -->
+                        <div class="product-specs-grid">
+                            <div class="spec-item spec-recipe">
+                                <div class="spec-icon">📋</div>
+                                <div class="spec-info">
+                                    <div class="spec-label">配方等级</div>
+                                    <div class="spec-value" id="stat-recipe">高级</div>
+                                    <div class="spec-progress">
+                                        <div class="progress-bar">
+                                            <div class="progress-fill" style="width: 75%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="spec-item spec-production">
+                                <div class="spec-icon">🏭</div>
+                                <div class="spec-info">
+                                    <div class="spec-label">生产质量</div>
+                                    <div class="spec-value" id="stat-production">优秀</div>
+                                    <div class="spec-progress">
+                                        <div class="progress-bar">
+                                            <div class="progress-fill" style="width: 80%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="spec-item spec-quality">
+                                <div class="spec-icon">🔍</div>
+                                <div class="spec-info">
+                                    <div class="spec-label">质检结果</div>
+                                    <div class="spec-value" id="stat-quality">通过</div>
+                                    <div class="spec-progress">
+                                        <div class="progress-bar">
+                                            <div class="progress-fill" style="width: 90%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="spec-item spec-packaging">
+                                <div class="spec-icon">🎁</div>
+                                <div class="spec-info">
+                                    <div class="spec-label">包装评分</div>
+                                    <div class="spec-value" id="stat-packaging">良好</div>
+                                    <div class="spec-progress">
+                                        <div class="progress-bar">
+                                            <div class="progress-fill" style="width: 70%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="spec-item spec-logistics">
+                                <div class="spec-icon">🚚</div>
+                                <div class="spec-info">
+                                    <div class="spec-label">物流速度</div>
+                                    <div class="spec-value" id="stat-logistics">快速</div>
+                                    <div class="spec-progress">
+                                        <div class="progress-bar">
+                                            <div class="progress-fill" style="width: 85%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="spec-item spec-cost">
+                                <div class="spec-icon">💰</div>
+                                <div class="spec-info">
+                                    <div class="spec-label">预估成本</div>
+                                    <div class="spec-value" id="stat-cost">中等</div>
+                                    <div class="spec-progress">
+                                        <div class="progress-bar">
+                                            <div class="progress-fill" style="width: 60%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 产品特色标签 -->
+                        <div class="product-tags">
+                            <span class="product-tag tag-premium">🌟 豪华配方</span>
+                            <span class="product-tag tag-natural">🌿 天然原料</span>
+                            <span class="product-tag tag-custom">🎨 专属定制</span>
+                        </div>
+                        
+                        <!-- 底部信息 -->
+                        <div class="product-footer">
+                            <div class="footer-info">
+                                <span class="footer-text">📅 生产日期: <span id="production-date">2024-01-15</span></span>
+                                <span class="footer-separator">|</span>
+                                <span class="footer-text">🏭 像素猫粮工厂 ODM</span>
+                            </div>
+                        </div>
+                        
+                        <!-- 产品操作按钮（下载时隐藏） -->
+                        <div class="product-actions" id="product-actions">
+                            <button class="btn btn-share" onclick="ProductSharing.shareProduct()">📤 分享产品</button>
+                            <button class="btn btn-download" onclick="ProductSharing.downloadProductCard()">💾 下载卡片</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 外部JavaScript文件 -->
+    <script src="js/app.js"></script>
+</body>
+</html>
