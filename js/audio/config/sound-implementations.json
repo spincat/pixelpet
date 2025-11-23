@@ -1,0 +1,274 @@
+{
+  "version": "1.0.0",
+  "last_updated": "2025-11-23",
+  "description": "音效实现配置 - 定义音效名称到具体实现的映射关系",
+  
+  "implementations": {
+    "web_audio": {
+      "description": "使用Web Audio API生成的音效",
+      "sounds": {
+        "click_sound": {
+          "description": "基础点击音效",
+          "generator": "simple-tone",
+          "parameters": {
+            "frequency": 800,
+            "duration": 0.05,
+            "type": "sine",
+            "volume": 0.3,
+            "fadeIn": 0.005,
+            "fadeOut": 0.01
+          }
+        },
+        "hover_sound": {
+          "description": "悬停音效",
+          "generator": "simple-tone", 
+          "parameters": {
+            "frequency": 600,
+            "duration": 0.03,
+            "type": "sine",
+            "volume": 0.2,
+            "fadeIn": 0.003,
+            "fadeOut": 0.008
+          }
+        },
+        "slider_move": {
+          "description": "滑块移动音效",
+          "generator": "noise-burst",
+          "parameters": {
+            "duration": 0.02,
+            "type": "white",
+            "volume": 0.15,
+            "fadeIn": 0.001,
+            "fadeOut": 0.005
+          }
+        },
+        "slider_release": {
+          "description": "滑块释放音效",
+          "generator": "simple-tone",
+          "parameters": {
+            "frequency": 400,
+            "duration": 0.04,
+            "type": "sine", 
+            "volume": 0.25,
+            "fadeIn": 0.002,
+            "fadeOut": 0.015
+          }
+        },
+        "coin_sound": {
+          "description": "金币收集音效",
+          "generator": "frequency-sweep",
+          "parameters": {
+            "startFrequency": 800,
+            "endFrequency": 1200,
+            "duration": 0.15,
+            "type": "sine",
+            "volume": 0.4,
+            "sweepType": "up"
+          }
+        },
+        "level_up_sound": {
+          "description": "升级音效",
+          "generator": "pulse-sequence",
+          "parameters": {
+            "frequency": 440,
+            "pulseCount": 3,
+            "pulseDuration": 0.08,
+            "gapDuration": 0.06,
+            "type": "sine",
+            "volume": 0.5
+          }
+        },
+        "machine_start": {
+          "description": "机器启动音效",
+          "generator": "frequency-sweep",
+          "parameters": {
+            "startFrequency": 100,
+            "endFrequency": 800,
+            "duration": 0.3,
+            "type": "sawtooth",
+            "volume": 0.6,
+            "sweepType": "up"
+          }
+        },
+        "machine_running": {
+          "description": "机器运行音效",
+          "generator": "noise-burst",
+          "parameters": {
+            "duration": 2.0,
+            "type": "brown",
+            "volume": 0.2,
+            "fadeIn": 0.5,
+            "fadeOut": 0.5
+          },
+          "loop": true
+        },
+        "customer_arrive": {
+          "description": "顾客到达音效",
+          "generator": "simple-tone",
+          "parameters": {
+            "frequency": 523.25,
+            "duration": 0.1,
+            "type": "sine",
+            "volume": 0.35,
+            "fadeIn": 0.01,
+            "fadeOut": 0.03
+          }
+        }
+      }
+    },
+    
+    "file": {
+      "description": "使用音频文件播放的音效",
+      "base_path": "assets/audio/",
+      "sounds": {
+        "background_music": {
+          "description": "背景音乐",
+          "file": "background-music.mp3",
+          "volume": 0.3,
+          "loop": true
+        },
+        "ambient_sound": {
+          "description": "环境氛围音效",
+          "file": "ambient-sound.wav",
+          "volume": 0.2,
+          "loop": true
+        },
+        "rain_sound": {
+          "description": "下雨音效",
+          "file": "rain-sound.mp3",
+          "volume": 0.25,
+          "loop": true
+        },
+        "wind_sound": {
+          "description": "风声音效",
+          "file": "wind-sound.wav",
+          "volume": 0.15,
+          "loop": true
+        },
+        "production_complete": {
+          "description": "生产完成音效",
+          "file": "production-complete.mp3",
+          "volume": 0.5
+        }
+      }
+    },
+    
+    "third_party": {
+      "description": "使用第三方音频库的音效",
+      "library": "howler.js",
+      "sounds": {
+        "game_over_sound": {
+          "description": "游戏结束音效",
+          "src": ["sounds/game-over.mp3", "sounds/game-over.ogg"],
+          "volume": 0.6,
+          "sprite": {
+            "gameOver": [0, 2000]
+          }
+        },
+        "game_start_sound": {
+          "description": "游戏开始音效",
+          "src": ["sounds/game-start.mp3", "sounds/game-start.ogg"],
+          "volume": 0.5
+        },
+        "achievement_sound": {
+          "description": "成就解锁音效",
+          "src": ["sounds/achievement.mp3", "sounds/achievement.ogg"],
+          "volume": 0.7
+        }
+      }
+    },
+    
+    "custom": {
+      "description": "自定义音效实现",
+      "sounds": {
+        "high_quality_sound": {
+          "description": "高质量生产完成音效",
+          "type": "composite",
+          "components": [
+            {
+              "generator": "simple-tone",
+              "parameters": {
+                "frequency": 1046.5,
+                "duration": 0.3,
+                "type": "sine",
+                "volume": 0.4
+              }
+            },
+            {
+              "generator": "simple-tone",
+              "parameters": {
+                "frequency": 1318.5,
+                "duration": 0.3,
+                "type": "sine",
+                "volume": 0.3,
+                "delay": 0.1
+              }
+            }
+          ]
+        },
+        "happy_customer_sound": {
+          "description": "快乐顾客满意音效",
+          "generator": "pulse-sequence",
+          "parameters": {
+            "frequency": 523.25,
+            "pulseCount": 4,
+            "pulseDuration": 0.06,
+            "gapDuration": 0.04,
+            "type": "triangle",
+            "volume": 0.35
+          }
+        }
+      }
+    }
+  },
+  
+  "fallback_implementations": {
+    "description": "备用实现 - 当主要实现不可用时使用",
+    "strategies": {
+      "web_audio_fallback": {
+        "description": "Web Audio API备用实现",
+        "sounds": {
+          "background_music": {
+            "generator": "simple-tone",
+            "parameters": {
+              "frequency": 220,
+              "duration": 60,
+              "type": "sine",
+              "volume": 0.1,
+              "loop": true
+            }
+          },
+          "ambient_sound": {
+            "generator": "noise-burst",
+            "parameters": {
+              "duration": 10,
+              "type": "pink",
+              "volume": 0.05,
+              "loop": true
+            }
+          }
+        }
+      }
+    }
+  },
+  
+  "performance_optimizations": {
+    "description": "性能优化配置",
+    "preload": {
+      "enabled": true,
+      "sounds": ["click_sound", "hover_sound", "coin_sound", "level_up_sound"],
+      "max_size": 1024
+    },
+    "cache": {
+      "enabled": true,
+      "max_entries": 50,
+      "ttl": 300000
+    },
+    "concurrent_limit": {
+      "ui": 3,
+      "game": 5,
+      "production": 2,
+      "environment": 2
+    }
+  }
+}

@@ -194,18 +194,20 @@ const SliderController = {
      * 设置初始值并更新显示
      */
     initialize: function() {
-        this.updateSlider('recipe');
-        this.updateSlider('production');
-        this.updateSlider('quality');
-        this.updateSlider('packaging');
-        this.updateSlider('logistics');
+        // 初始化时禁用音效播放
+        this.updateSlider('recipe', true);
+        this.updateSlider('production', true);
+        this.updateSlider('quality', true);
+        this.updateSlider('packaging', true);
+        this.updateSlider('logistics', true);
     },
     
     /**
      * 更新指定类型的滑块
      * @param {string} type - 滑块类型
+     * @param {boolean} suppressSound - 是否抑制音效播放（用于初始化）
      */
-    updateSlider: function(type) {
+    updateSlider: function(type, suppressSound = false) {
         const slider = DOMCache.sliders[type];
         const valueDisplay = DOMCache.sliderValues[type];
         const stepValue = DOMCache.stepValues[type];
@@ -226,6 +228,14 @@ const SliderController = {
         
         // 更新连接线颜色
         this.updateConnectorColor(type, value);
+        
+        // 只有在不抑制音效时才播放滑块调整音效
+        if (!suppressSound) {
+            AudioInterface.playUI('slider_adjust', { 
+                type: type, 
+                value: value 
+            });
+        }
     },
     
     /**
@@ -256,8 +266,9 @@ const UIController = {
     /**
      * 选择表情符号
      * @param {HTMLElement} element - 点击的表情元素
+     * @param {boolean} suppressSound - 是否抑制音效播放（用于初始化）
      */
-    selectEmoji: function(element) {
+    selectEmoji: function(element, suppressSound = false) {
         // 移除其他选中状态
         document.querySelectorAll('.emoji-option').forEach(opt => {
             opt.classList.remove('selected');
@@ -266,6 +277,11 @@ const UIController = {
         // 设置当前选中
         element.classList.add('selected');
         AppState.selectedEmoji = element.getAttribute('data-emoji');
+        
+        // 只有在不抑制音效时才播放UI交互音效
+        if (!suppressSound) {
+            AudioInterface.playUI('emoji_select', { emoji: AppState.selectedEmoji });
+        }
     },
     
     /**
@@ -282,6 +298,9 @@ const UIController = {
         // 设置当前选中
         event.currentTarget.classList.add('active');
         AppState.selectedService = serviceType;
+        
+        // 播放UI交互音效
+        AudioInterface.playUI('service_select', { service: AppState.selectedService });
     },
     
     /**
@@ -290,6 +309,9 @@ const UIController = {
     launchProduction: function() {
         ProductionController.resetProcess();
         ProductionController.startProductionAnimation();
+        
+        // 播放生产流程音效
+        AudioInterface.playProduction('production_start', { service: AppState.selectedService });
     },
     
     /**
@@ -310,6 +332,9 @@ const UIController = {
         
         // 隐藏产品输出
         DOMCache.productOutput.classList.remove('show');
+        
+        // 播放UI交互音效
+        AudioInterface.playUI('system_reset', {});
     },
     
     /**
@@ -389,9 +414,23 @@ const ProductionController = {
         stepElement.classList.add('active');
         connectorElement.classList.add('active');
         
+        // 播放步骤激活音效
+        const stepType = Utils.getTypeFromStep(stepNumber);
+        AudioInterface.playProduction(`step_${stepType}`, { 
+            step: stepNumber, 
+            value: value 
+        });
+        
         setTimeout(() => {
             stepElement.classList.add('completed');
             stepElement.classList.remove('active');
+            
+            // 播放步骤完成音效
+            AudioInterface.playProduction(`step_complete`, { 
+                step: stepNumber, 
+                type: stepType,
+                value: value 
+            });
         }, 600);
     },
     
@@ -406,6 +445,9 @@ const ProductionController = {
         
         // 显示产品输出
         DOMCache.productOutput.classList.add('show');
+        
+        // 播放生产完成音效
+        AudioInterface.playProduction('production_complete', { brand: brandName });
     },
     
     /**
@@ -498,6 +540,9 @@ const ProductSharing = {
         const productData = this.getProductData();
         const shareText = this.generateShareText(productData);
         
+        // 播放UI交互音效
+        AudioInterface.playUI('product_share', {});
+        
         if (navigator.share) {
             navigator.share({
                 title: '我的定制猫粮产品',
@@ -552,6 +597,9 @@ const ProductSharing = {
         const productCard = document.getElementById('product-card');
         const productActions = document.getElementById('product-actions');
         
+        // 播放UI交互音效
+        AudioInterface.playUI('product_download', {});
+        
         // 下载前隐藏操作按钮
         productActions.style.display = 'none';
         
@@ -577,20 +625,132 @@ const ProductSharing = {
     }
 };
 
+// ==================== 0. 音效系统集成 ====================
+
+/**
+ * 音效系统接口封装
+ * 提供简单的API调用，与音效系统保持松耦合
+ */
+const AudioInterface = {
+    
+    /**
+     * 播放UI交互音效
+     * @param {string} action - 交互动作
+     * @param {Object} data - 附加数据
+     */
+    playUI: function(action, data = {}) {
+        // 如果音效系统已初始化，直接播放
+        if (window.AudioManager && window.AudioManager.isInitialized) {
+            window.AudioManager.playUI(action, data);
+        } else {
+            // 如果音效系统未初始化，尝试初始化并播放
+            this.initializeAndPlayUI(action, data);
+        }
+    },
+    
+    /**
+     * 初始化音效系统并播放音效
+     * @param {string} action - 交互动作
+     * @param {Object} data - 附加数据
+     */
+    initializeAndPlayUI: async function(action, data = {}) {
+        try {
+            // 如果AudioManager存在但未初始化，尝试初始化
+            if (window.AudioManager && !window.AudioManager.isInitialized) {
+                console.log('🎵 音效系统未初始化，尝试初始化...');
+                await window.AudioManager.initialize();
+                
+                // 初始化成功后播放音效
+                if (window.AudioManager.isInitialized) {
+                    window.AudioManager.playUI(action, data);
+                }
+            } else if (!window.AudioManager) {
+                console.warn('🎵 音效系统组件未加载，无法播放音效:', action);
+            }
+        } catch (error) {
+            console.warn('🎵 音效系统初始化失败，音效播放被忽略:', error);
+        }
+    },
+    
+    /**
+     * 播放生产流程音效
+     * @param {string} action - 生产动作
+     * @param {Object} data - 附加数据
+     */
+    playProduction: function(action, data = {}) {
+        // 如果音效系统已初始化，直接播放
+        if (window.AudioManager && window.AudioManager.isInitialized) {
+            window.AudioManager.playProduction(action, data);
+        } else {
+            // 如果音效系统未初始化，尝试初始化并播放
+            this.initializeAndPlayProduction(action, data);
+        }
+    },
+    
+    /**
+     * 初始化音效系统并播放生产音效
+     * @param {string} action - 生产动作
+     * @param {Object} data - 附加数据
+     */
+    initializeAndPlayProduction: async function(action, data = {}) {
+        try {
+            // 如果AudioManager存在但未初始化，尝试初始化
+            if (window.AudioManager && !window.AudioManager.isInitialized) {
+                console.log('🎵 音效系统未初始化，尝试初始化...');
+                await window.AudioManager.initialize();
+                
+                // 初始化成功后播放音效
+                if (window.AudioManager.isInitialized) {
+                    window.AudioManager.playProduction(action, data);
+                }
+            } else if (!window.AudioManager) {
+                console.warn('🎵 音效系统组件未加载，无法播放音效:', action);
+            }
+        } catch (error) {
+            console.warn('🎵 音效系统初始化失败，音效播放被忽略:', error);
+        }
+    }
+};
+
 // ==================== 8. 应用初始化 ====================
 
 /**
  * 应用初始化函数
  * 在DOM加载完成后执行
  */
-function initializeApp() {
+async function initializeApp() {
+    // 等待音效系统初始化完成
+    await waitForAudioSystem();
+    
     // 初始化滑块
     SliderController.initialize();
     
-    // 设置默认表情
-    UIController.selectEmoji(document.querySelector('.emoji-option'));
+    // 设置默认表情（初始化时抑制音效）
+    UIController.selectEmoji(document.querySelector('.emoji-option'), true);
     
     console.log('🐱 像素猫粮工厂应用初始化完成！');
+}
+
+/**
+ * 等待音效系统初始化完成
+ */
+async function waitForAudioSystem() {
+    return new Promise((resolve) => {
+        const checkAudioSystem = () => {
+            if (window.AudioManager && window.AudioManager.isInitialized) {
+                console.log('🎵 音效系统已就绪');
+                resolve();
+            } else {
+                // 如果音效系统未初始化，监听初始化完成事件
+                document.addEventListener('audioSystemInitialized', resolve, { once: true });
+                
+                // 如果3秒后仍未初始化，继续应用初始化（避免与静默初始化冲突）
+                setTimeout(resolve, 3000);
+            }
+        };
+        
+        checkAudioSystem();
+    });
 }
 
 // DOM加载完成后初始化应用

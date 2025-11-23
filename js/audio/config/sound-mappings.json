@@ -1,0 +1,257 @@
+{
+  "version": "1.0.0",
+  "last_updated": "2025-11-23",
+  "description": "音效映射配置 - 定义动作场景到音效名称的映射关系",
+  
+  "mappings": {
+    "ui": {
+      "description": "用户界面交互音效",
+      "actions": {
+        "button_click": {
+          "sound_name": "click_sound",
+          "description": "按钮点击音效",
+          "priority": "high"
+        },
+        "button_hover": {
+          "sound_name": "hover_sound", 
+          "description": "按钮悬停音效",
+          "priority": "medium"
+        },
+        "slider_move": {
+          "sound_name": "slider_move",
+          "description": "滑块移动音效",
+          "priority": "medium"
+        },
+        "slider_release": {
+          "sound_name": "slider_release",
+          "description": "滑块释放音效", 
+          "priority": "medium"
+        },
+        "dropdown_open": {
+          "sound_name": "dropdown_open",
+          "description": "下拉菜单打开音效",
+          "priority": "low"
+        },
+        "dropdown_close": {
+          "sound_name": "dropdown_close",
+          "description": "下拉菜单关闭音效",
+          "priority": "low"
+        },
+        "emoji_select": {
+          "sound_name": "click_sound",
+          "description": "表情选择音效",
+          "priority": "medium"
+        },
+        "slider_adjust": {
+          "sound_name": "slider_move",
+          "description": "滑块调整音效",
+          "priority": "medium"
+        },
+        "service_select": {
+          "sound_name": "click_sound",
+          "description": "服务选择音效",
+          "priority": "medium"
+        }
+      }
+    },
+    
+    "game": {
+      "description": "游戏逻辑音效",
+      "actions": {
+        "coin_collect": {
+          "sound_name": "coin_sound",
+          "description": "收集金币音效",
+          "priority": "high"
+        },
+        "level_up": {
+          "sound_name": "level_up_sound", 
+          "description": "升级音效",
+          "priority": "high"
+        },
+        "achievement_unlock": {
+          "sound_name": "achievement_sound",
+          "description": "成就解锁音效",
+          "priority": "medium"
+        },
+        "game_over": {
+          "sound_name": "game_over_sound",
+          "description": "游戏结束音效",
+          "priority": "high"
+        },
+        "game_start": {
+          "sound_name": "game_start_sound",
+          "description": "游戏开始音效",
+          "priority": "medium"
+        }
+      }
+    },
+    
+    "environment": {
+      "description": "环境音效",
+      "actions": {
+        "background_music": {
+          "sound_name": "background_music",
+          "description": "背景音乐",
+          "priority": "low",
+          "loop": true
+        },
+        "ambient_sound": {
+          "sound_name": "ambient_sound",
+          "description": "环境氛围音效",
+          "priority": "low",
+          "loop": true
+        },
+        "weather_rain": {
+          "sound_name": "rain_sound",
+          "description": "下雨音效",
+          "priority": "low",
+          "loop": true
+        },
+        "weather_wind": {
+          "sound_name": "wind_sound",
+          "description": "风声音效",
+          "priority": "low",
+          "loop": true
+        }
+      }
+    },
+    
+    "production": {
+      "description": "生产流程音效",
+      "actions": {
+        "machine_start": {
+          "sound_name": "machine_start",
+          "description": "机器启动音效",
+          "priority": "medium"
+        },
+        "machine_running": {
+          "sound_name": "machine_running",
+          "description": "机器运行音效",
+          "priority": "low",
+          "loop": true
+        },
+        "machine_stop": {
+          "sound_name": "machine_stop",
+          "description": "机器停止音效",
+          "priority": "medium"
+        },
+        "production_start": {
+          "sound_name": "machine_start",
+          "description": "生产开始音效",
+          "priority": "medium"
+        },
+        "step_recipe": {
+          "sound_name": "click_sound",
+          "description": "配方步骤音效",
+          "priority": "medium"
+        },
+        "step_production": {
+          "sound_name": "click_sound",
+          "description": "生产步骤音效",
+          "priority": "medium"
+        },
+        "step_quality": {
+          "sound_name": "click_sound",
+          "description": "质检步骤音效",
+          "priority": "medium"
+        },
+        "step_packaging": {
+          "sound_name": "click_sound",
+          "description": "包装步骤音效",
+          "priority": "medium"
+        },
+        "step_logistics": {
+          "sound_name": "click_sound",
+          "description": "物流步骤音效",
+          "priority": "medium"
+        },
+        "step_complete": {
+          "sound_name": "success_sound",
+          "description": "步骤完成音效",
+          "priority": "medium"
+        },
+        "production_complete": {
+          "sound_name": "production_complete",
+          "description": "生产完成音效",
+          "priority": "high"
+        },
+        "quality_check": {
+          "sound_name": "quality_check",
+          "description": "质量检查音效",
+          "priority": "medium"
+        }
+      }
+    },
+    
+    "customer": {
+      "description": "顾客相关音效",
+      "actions": {
+        "customer_arrive": {
+          "sound_name": "customer_arrive",
+          "description": "顾客到达音效",
+          "priority": "medium"
+        },
+        "customer_leave": {
+          "sound_name": "customer_leave",
+          "description": "顾客离开音效",
+          "priority": "low"
+        },
+        "customer_satisfied": {
+          "sound_name": "customer_satisfied",
+          "description": "顾客满意音效",
+          "priority": "medium"
+        },
+        "customer_dissatisfied": {
+          "sound_name": "customer_dissatisfied",
+          "description": "顾客不满意音效",
+          "priority": "medium"
+        }
+      }
+    }
+  },
+  
+  "conditional_mappings": {
+    "description": "条件映射规则 - 根据特定条件选择不同的音效",
+    "rules": [
+      {
+        "condition": "time_of_day == 'night'",
+        "mappings": {
+          "background_music": {
+            "sound_name": "night_music",
+            "description": "夜间背景音乐"
+          }
+        }
+      },
+      {
+        "condition": "production_quality >= 90",
+        "mappings": {
+          "production_complete": {
+            "sound_name": "high_quality_sound",
+            "description": "高质量生产完成音效"
+          }
+        }
+      },
+      {
+        "condition": "customer_mood == 'happy'",
+        "mappings": {
+          "customer_satisfied": {
+            "sound_name": "happy_customer_sound",
+            "description": "快乐顾客满意音效"
+          }
+        }
+      }
+    ]
+  },
+  
+  "fallback_mappings": {
+    "description": "备用映射 - 当主要映射不存在时使用",
+    "default_sound": "click_sound",
+    "category_fallbacks": {
+      "ui": "click_sound",
+      "game": "coin_sound", 
+      "production": "machine_start",
+      "customer": "customer_arrive",
+      "environment": "ambient_sound"
+    }
+  }
+}

@@ -1,0 +1,183 @@
+{
+  "version": "1.0.0",
+  "last_updated": "2025-11-23",
+  "description": "音频系统设置配置 - 定义全局音频参数和用户偏好",
+  
+  "global_settings": {
+    "description": "全局音频设置",
+    "enabled": true,
+    "master_volume": 0.8,
+    "muted": false,
+    "auto_resume": true,
+    "suspend_on_hidden": true
+  },
+  
+  "category_volumes": {
+    "description": "音效分类音量控制",
+    "ui": {
+      "volume": 0.9,
+      "description": "用户界面音效",
+      "muted": false
+    },
+    "game": {
+      "volume": 1.0,
+      "description": "游戏逻辑音效",
+      "muted": false
+    },
+    "production": {
+      "volume": 0.8,
+      "description": "生产流程音效",
+      "muted": false
+    },
+    "customer": {
+      "volume": 0.7,
+      "description": "顾客相关音效",
+      "muted": false
+    },
+    "environment": {
+      "volume": 0.6,
+      "description": "环境音效",
+      "muted": false
+    },
+    "music": {
+      "volume": 0.5,
+      "description": "背景音乐",
+      "muted": false
+    }
+  },
+  
+  "performance_settings": {
+    "description": "性能优化设置",
+    "preload_enabled": true,
+    "cache_enabled": true,
+    "max_concurrent_sounds": 8,
+    "gc_interval": 30000,
+    "memory_limit": 50,
+    "low_performance_mode": false,
+    "adaptive_quality": true
+  },
+  
+  "platform_optimizations": {
+    "description": "平台特定优化",
+    "mobile": {
+      "max_concurrent_sounds": 4,
+      "preload_enabled": false,
+      "low_latency": true,
+      "sample_rate": 22050
+    },
+    "desktop": {
+      "max_concurrent_sounds": 12,
+      "preload_enabled": true,
+      "sample_rate": 44100
+    },
+    "tablet": {
+      "max_concurrent_sounds": 6,
+      "preload_enabled": true,
+      "sample_rate": 32000
+    }
+  },
+  
+  "quality_settings": {
+    "description": "音质设置",
+    "sample_rate": 44100,
+    "bit_depth": 16,
+    "compression": {
+      "enabled": true,
+      "quality": "medium"
+    },
+    "spatial_audio": {
+      "enabled": false,
+      "max_distance": 100
+    }
+  },
+  
+  "debug_settings": {
+    "description": "调试和开发设置",
+    "logging_enabled": true,
+    "log_level": "info",
+    "performance_monitoring": true,
+    "sound_visualization": false,
+    "test_mode": false
+  },
+  
+  "browser_compatibility": {
+    "description": "浏览器兼容性设置",
+    "fallback_strategies": {
+      "no_web_audio": "silent",
+      "no_audio_context": "html5_audio",
+      "limited_memory": "reduce_cache"
+    },
+    "feature_detection": {
+      "web_audio": true,
+      "media_session": false,
+      "spatial_audio": false
+    }
+  },
+  
+  "user_preferences": {
+    "description": "用户偏好设置",
+    "sound_theme": "default",
+    "voice_language": "zh-CN",
+    "accessibility": {
+      "high_contrast_audio": false,
+      "mono_audio": false,
+      "reduce_loud_sounds": false
+    },
+    "notifications": {
+      "sound_enabled": true,
+      "vibration_enabled": false
+    }
+  },
+  
+  "advanced_settings": {
+    "description": "高级音频设置",
+    "audio_context": {
+      "latency_hint": "interactive",
+      "sample_rate": "auto"
+    },
+    "compressor": {
+      "enabled": true,
+      "threshold": -24,
+      "knee": 30,
+      "ratio": 12,
+      "attack": 0.003,
+      "release": 0.25
+    },
+    "equalizer": {
+      "enabled": false,
+      "bands": [
+        {"frequency": 60, "gain": 0},
+        {"frequency": 230, "gain": 0},
+        {"frequency": 910, "gain": 0},
+        {"frequency": 3600, "gain": 0},
+        {"frequency": 14000, "gain": 0}
+      ]
+    }
+  },
+  
+  "event_handlers": {
+    "description": "事件处理器配置",
+    "page_visibility": {
+      "suspend_on_hidden": true,
+      "resume_on_visible": true
+    },
+    "user_interaction": {
+      "auto_resume": true,
+      "first_click_unlock": true
+    },
+    "network_conditions": {
+      "offline_mode": true,
+      "low_bandwidth": true
+    }
+  },
+  
+  "storage_settings": {
+    "description": "存储设置",
+    "local_storage": {
+      "enabled": true,
+      "key": "pixelpet_audio_settings"
+    },
+    "sync_across_devices": false,
+    "backup_enabled": true
+  }
+}
